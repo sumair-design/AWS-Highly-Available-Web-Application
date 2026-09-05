@@ -1,0 +1,42 @@
+name: Documentation CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate shell script syntax
+        run: bash -n bootstrap/user-data.sh
+
+      - name: Check required documentation
+        run: |
+          test -f README.md
+          test -f architecture/architecture.svg
+          test -f architecture/architecture-medium.svg
+          test -f app/index.html
+          test -f bootstrap/user-data.sh
+          test -f networking/vpc-design.md
+          test -f networking/subnet-design.md
+          test -f networking/routing.md
+          test -f load-balancer/alb-configuration.md
+          test -f load-balancer/target-group.md
+          test -f autoscaling/launch-template.md
+          test -f autoscaling/auto-scaling-group.md
+          test -f autoscaling/scaling-policy.md
+          test -f monitoring/cloudwatch.md
+          test -f monitoring/alarms.md
+          test -f security/security-groups.md
+          test -f security/iam.md
+          test -f route53/dns-configuration.md
+          test -f testing/high-availability-tests.md
+          test -f docs/deployment.md
+          test -f docs/troubleshooting.md
+          test -f docs/cost.md
